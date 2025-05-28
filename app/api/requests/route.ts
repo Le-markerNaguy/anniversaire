@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { name, email, phone, date, message } = body
+    const { name, email, phone, message } = body
 
     // Validation
     if (!name || !email || !message) {
@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
         name,
         email,
         phone: phone || null,
-        date: date ? new Date(date) : null,
         message,
       },
     })

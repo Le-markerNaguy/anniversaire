@@ -1,5 +1,11 @@
-import * as React from 'react';
-import { Html, Head, Body, Container, Text, Heading, Hr } from '@react-email/components';
+import { Html } from '@react-email/html';
+import { Head } from '@react-email/head';
+import { Body } from '@react-email/body';
+import { Container } from '@react-email/container';
+import { Text } from '@react-email/text';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+
 interface RejectionEmailProps {
   name: string;
 }
@@ -22,8 +28,10 @@ export const RejectionEmail = ({ name }: RejectionEmailProps) => (
         </Text>
         <Text>Cordialement,</Text>
         <Hr style={{ margin: '20px 0' }} />
-        <Text style={{ fontSize: '12px', color: '#888' }}>Ceci est un email automatique, merci de ne pas y répondre.</Text>
+        <Text style={{ fontSize: '12px', color: '#888' }}>
+          Ceci est un email automatique, merci de ne pas y répondre.
+        </Text>
       </Container>
     </Body>
   </Html>
-); 
+);
