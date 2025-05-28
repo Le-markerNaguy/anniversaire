@@ -1,67 +1,51 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { render } from '@react-email/render';
-import { AcceptanceEmail } from '@/emails/AcceptanceEmail'; // Assume you have these email components
+import { AcceptanceEmail } from '@/emails/AcceptanceEmail';
 import { RejectionEmail } from '@/emails/RejectionEmail';
 import * as React from 'react';
 
-// Configure your SMTP transport
-// Use environment variables for sensitive information
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587', 10), // Default SMTP port
-  secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface SendEmailProps {
   to: string;
   subject: string;
   template: 'acceptance' | 'rejection';
-  templateProps: { name: string }; // Define props needed by your email templates
+  templateProps: { name: string };
 }
 
 export async function sendEmail({ to, subject, template, templateProps }: SendEmailProps) {
   try {
-    let emailHtml = '';
-
-    // Render the appropriate email component
-    if (template === 'acceptance') {
-      emailHtml = await render(React.createElement(AcceptanceEmail, templateProps));
-    } else if (template === 'rejection') {
-      emailHtml = await render(React.createElement(RejectionEmail, templateProps));
+    // Vérification que RESEND_FROM_EMAIL est bien configuré
+    if (!process.env.RESEND_FROM_EMAIL) {
+      throw new Error('RESEND_FROM_EMAIL is not configured in environment variables');
     }
+
+    // Rendu du template email
+    const emailHtml = template === 'acceptance'
+      ? await render(React.createElement(AcceptanceEmail, templateProps))
+      : await render(React.createElement(RejectionEmail, templateProps));
 
     if (!emailHtml) {
-        console.error(`Failed to render email template: ${template}`);
-        return; // Exit if template rendering failed
+      throw new Error(`Failed to render ${template} email template`);
     }
 
-    const mailOptions = {
-      from: process.env.SMTP_FROM_EMAIL, // Sender address from environment variables
-      to,
+    // Envoi de l'email avec RESEND_FROM_EMAIL comme expéditeur
+    const { data, error } = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL,
+      to: [to],
       subject,
       html: emailHtml,
-    };
+    });
 
-    // Send the email
-    const info = await transporter.sendMail(mailOptions);
+    if (error) {
+      throw error;
+    }
 
-    console.log(`Email sent: ${info.messageId}`);
-    return info;
+    console.log(`Email sent successfully to ${to} with ID: ${data?.id}`);
+    return data;
 
   } catch (error) {
-    console.error('Error sending email:', error);
-    throw error; // Re-throw the error for handling in the calling code
+    console.error('Email sending failed:', error);
+    throw error;
   }
 }
-
-// Remember to add the following environment variables to your .env file:
-// SMTP_HOST=your_smtp_server_host
-// SMTP_PORT=your_smtp_server_port (e.g., 587 or 465)
-// SMTP_SECURE=true_or_false (true if port is 465, false otherwise usually)
-// SMTP_USER=your_smtp_username
-// SMTP_PASSWORD=your_smtp_password
-// SMTP_FROM_EMAIL=your_sending_email_address 

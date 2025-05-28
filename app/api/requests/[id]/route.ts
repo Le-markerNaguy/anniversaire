@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server"
+import {  NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { sendEmail } from "@/lib/sendEmail"
 
@@ -25,16 +25,15 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // PATCH /api/requests/[id] - Mettre à jour le statut d'une demande
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const id = params.id
-    const body = await req.json()
-    const { status } = body
+    const id = params.id;
+    const body = await req.json();
+    const { status } = body;
 
     // Validation
     if (!status || !["APPROVED", "REJECTED", "PENDING"].includes(status)) {
-      return NextResponse.json({ error: "Statut invalide" }, { status: 400 })
+      return NextResponse.json({ error: "Statut invalide" }, { status: 400 });
     }
 
-    // Fetch the request before updating to get email and name
     const requestToUpdate = await prisma.request.findUnique({
       where: { id },
       select: { id: true, name: true, email: true, status: true },
@@ -44,15 +43,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return NextResponse.json({ error: "Demande non trouvée" }, { status: 404 });
     }
 
-    // Only send email if status is changing to APPROVED or REJECTED
+    // Mise à jour du statut d'abord
+    const updatedRequest = await prisma.request.update({
+      where: { id },
+      data: { status },
+    });
+
+    // Envoi d'email seulement si le statut change vers APPROVED/REJECTED
     if (requestToUpdate.status !== status && (status === "APPROVED" || status === "REJECTED")) {
       try {
-        await prisma.request.update({
-          where: { id },
-          data: { status },
-        });
-
-        // Send email based on the new status
         if (status === "APPROVED") {
           await sendEmail({
             to: requestToUpdate.email,
@@ -60,7 +59,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
             template: 'acceptance',
             templateProps: { name: requestToUpdate.name },
           });
-        } else if (status === "REJECTED") {
+        } else {
           await sendEmail({
             to: requestToUpdate.email,
             subject: "Mise à jour concernant votre demande de participation",
@@ -68,27 +67,24 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
             templateProps: { name: requestToUpdate.name },
           });
         }
-
-        return NextResponse.json({ ...requestToUpdate, status });
-
       } catch (emailError) {
-        console.error("Erreur lors de l'envoi de l'email:", emailError);
-        // Decide how to handle email sending errors: return error or proceed?
-        // For now, we'll log and return the successful status update response.
-        return NextResponse.json({ ...requestToUpdate, status, email_error: "Erreur lors de l'envoi de l'email" });
+        console.error("Erreur d'envoi d'email:", emailError);
+        // On retourne quand même la mise à jour mais avec un avertissement
+        return NextResponse.json({
+          ...updatedRequest,
+          warning: "Statut mis à jour mais échec d'envoi de l'email"
+        });
       }
-    } else {
-       // If status is not changing or not to APPROVED/REJECTED, just update without sending email
-       const updatedRequest = await prisma.request.update({
-        where: { id },
-        data: { status },
-      });
-       return NextResponse.json(updatedRequest);
     }
 
+    return NextResponse.json(updatedRequest);
+
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la demande:", error)
-    return NextResponse.json({ error: "Erreur lors de la mise à jour de la demande" }, { status: 500 })
+    console.error("Erreur lors de la mise à jour:", error);
+    return NextResponse.json(
+      { error: "Échec de la mise à jour du statut" },
+      { status: 500 }
+    );
   }
 }
 

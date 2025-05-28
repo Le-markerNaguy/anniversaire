@@ -94,31 +94,6 @@ export function RegistrationForm() {
         </div>
 
         <div className="space-y-2">
-          <Label>Date d'arrivée souhaitée</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                type="button"
-                variant="outline"
-                className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP", { locale: fr }) : "Sélectionnez une date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar 
-                mode="single" 
-                selected={date} 
-                onSelect={setDate} 
-                initialFocus 
-                locale={fr} 
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="message">Pourquoi souhaitez-vous participer ?</Label>
           <Textarea
             id="message"

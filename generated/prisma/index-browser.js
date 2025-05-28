@@ -125,7 +125,6 @@ exports.Prisma.RequestScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
-  date: 'date',
   message: 'message',
   status: 'status',
   createdAt: 'createdAt',

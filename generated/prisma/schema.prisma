@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Request {
@@ -16,7 +17,6 @@ model Request {
   name      String
   email     String
   phone     String?
-  date      DateTime?
   message   String
   status    RequestStatus @default(PENDING)
   createdAt DateTime      @default(now())

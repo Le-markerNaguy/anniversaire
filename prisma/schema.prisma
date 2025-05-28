@@ -19,7 +19,6 @@ model Request {
   name      String
   email     String
   phone     String?
-  date      DateTime?
   message   String
   status    RequestStatus @default(PENDING)
   createdAt DateTime @default(now())

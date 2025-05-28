@@ -993,7 +993,6 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
-    date: Date | null
     message: string | null
     status: $Enums.RequestStatus | null
     createdAt: Date | null
@@ -1005,7 +1004,6 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
-    date: Date | null
     message: string | null
     status: $Enums.RequestStatus | null
     createdAt: Date | null
@@ -1017,7 +1015,6 @@ export namespace Prisma {
     name: number
     email: number
     phone: number
-    date: number
     message: number
     status: number
     createdAt: number
@@ -1031,7 +1028,6 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    date?: true
     message?: true
     status?: true
     createdAt?: true
@@ -1043,7 +1039,6 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    date?: true
     message?: true
     status?: true
     createdAt?: true
@@ -1055,7 +1050,6 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    date?: true
     message?: true
     status?: true
     createdAt?: true
@@ -1140,7 +1134,6 @@ export namespace Prisma {
     name: string
     email: string
     phone: string | null
-    date: Date | null
     message: string
     status: $Enums.RequestStatus
     createdAt: Date
@@ -1169,7 +1162,6 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    date?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -1181,7 +1173,6 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    date?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -1193,7 +1184,6 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    date?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -1205,14 +1195,13 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    date?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "date" | "message" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["request"]>
+  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "message" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["request"]>
 
   export type $RequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Request"
@@ -1222,7 +1211,6 @@ export namespace Prisma {
       name: string
       email: string
       phone: string | null
-      date: Date | null
       message: string
       status: $Enums.RequestStatus
       createdAt: Date
@@ -1654,7 +1642,6 @@ export namespace Prisma {
     readonly name: FieldRef<"Request", 'String'>
     readonly email: FieldRef<"Request", 'String'>
     readonly phone: FieldRef<"Request", 'String'>
-    readonly date: FieldRef<"Request", 'DateTime'>
     readonly message: FieldRef<"Request", 'String'>
     readonly status: FieldRef<"Request", 'RequestStatus'>
     readonly createdAt: FieldRef<"Request", 'DateTime'>
@@ -3039,7 +3026,6 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phone: 'phone',
-    date: 'date',
     message: 'message',
     status: 'status',
     createdAt: 'createdAt',
@@ -3104,20 +3090,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'RequestStatus'
    */
   export type EnumRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestStatus'>
@@ -3128,6 +3100,20 @@ export namespace Prisma {
    * Reference to a field of type 'RequestStatus[]'
    */
   export type ListEnumRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -3156,7 +3142,6 @@ export namespace Prisma {
     name?: StringFilter<"Request"> | string
     email?: StringFilter<"Request"> | string
     phone?: StringNullableFilter<"Request"> | string | null
-    date?: DateTimeNullableFilter<"Request"> | Date | string | null
     message?: StringFilter<"Request"> | string
     status?: EnumRequestStatusFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"Request"> | Date | string
@@ -3168,7 +3153,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    date?: SortOrderInput | SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -3183,7 +3167,6 @@ export namespace Prisma {
     name?: StringFilter<"Request"> | string
     email?: StringFilter<"Request"> | string
     phone?: StringNullableFilter<"Request"> | string | null
-    date?: DateTimeNullableFilter<"Request"> | Date | string | null
     message?: StringFilter<"Request"> | string
     status?: EnumRequestStatusFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"Request"> | Date | string
@@ -3195,7 +3178,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    date?: SortOrderInput | SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -3213,7 +3195,6 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Request"> | string
     email?: StringWithAggregatesFilter<"Request"> | string
     phone?: StringNullableWithAggregatesFilter<"Request"> | string | null
-    date?: DateTimeNullableWithAggregatesFilter<"Request"> | Date | string | null
     message?: StringWithAggregatesFilter<"Request"> | string
     status?: EnumRequestStatusWithAggregatesFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeWithAggregatesFilter<"Request"> | Date | string
@@ -3277,7 +3258,6 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    date?: Date | string | null
     message: string
     status?: $Enums.RequestStatus
     createdAt?: Date | string
@@ -3289,7 +3269,6 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    date?: Date | string | null
     message: string
     status?: $Enums.RequestStatus
     createdAt?: Date | string
@@ -3301,7 +3280,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3313,7 +3291,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3325,7 +3302,6 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    date?: Date | string | null
     message: string
     status?: $Enums.RequestStatus
     createdAt?: Date | string
@@ -3337,7 +3313,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3349,7 +3324,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3442,17 +3416,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type EnumRequestStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.RequestStatus | EnumRequestStatusFieldRefInput<$PrismaModel>
     in?: $Enums.RequestStatus[] | ListEnumRequestStatusFieldRefInput<$PrismaModel>
@@ -3481,7 +3444,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    date?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -3493,7 +3455,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    date?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -3505,7 +3466,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    date?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -3546,20 +3506,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -3618,10 +3564,6 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type EnumRequestStatusFieldUpdateOperationsInput = {
     set?: $Enums.RequestStatus
   }
@@ -3656,17 +3598,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedEnumRequestStatusFilter<$PrismaModel = never> = {
@@ -3741,20 +3672,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
