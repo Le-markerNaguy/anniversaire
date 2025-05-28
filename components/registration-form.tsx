@@ -1,17 +1,11 @@
 "use client"
 
-import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { format } from "date-fns"
-import { fr } from "date-fns/locale"
-import { CalendarIcon } from "lucide-react"
-import { useToast } from "@/hooks/use-toast" 
+import { useToast } from "@/hooks/use-toast"
+import React, { useState } from "react"
 
 export function RegistrationForm() {
   const [date, setDate] = useState<Date>()
@@ -25,7 +19,7 @@ export function RegistrationForm() {
 
     const formData = new FormData(e.currentTarget)
     const formValues = {
-      name: formData.get("name") as string,
+      name: formData.get("name") as number,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       date: date ? date.toISOString() : null,
@@ -34,7 +28,7 @@ export function RegistrationForm() {
 
     try {
       const response = await fetch("/api/requests", {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
