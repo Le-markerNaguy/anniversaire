@@ -17,7 +17,7 @@ export const sessionOptions: SessionOptions = {
   cookieName: "admin_session", // You can name your session cookie
   password: process.env.SESSION_SECRET || "this_is_a_default_very_insecure_password", // Use env var for password
   cookieOptions: {
-    secure: process.env.NODE_ENV === "developpement", // Use secure cookie in production
+    secure: process.env.NODE_ENV === "production", // Use secure cookie in production
     httpOnly: true, // Recommended for security
     sameSite: "lax", // Recommended for most cases
     path: "/",

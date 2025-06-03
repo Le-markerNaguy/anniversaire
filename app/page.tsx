@@ -3,6 +3,16 @@
 import Image from "next/image"
 import { RegistrationForm } from "@/components/registration-form"
 import { PinkFlowerButton } from "@/components/pink-flower-button"
+
+// === Configuration personnalisable pour l'anniversaire ===
+const ANNIV_CONFIG = {
+  title: "Invitation à mon anniversaire",
+  intro: "Faites une demande pour participer à cet événement spécial !",
+  formTitle: "Demande de participation",
+  formSubtitle: "Remplissez le formulaire ci-dessous pour demander à participer à l'événement",
+  backgroundImage: "/birthday-cake-fr.webp", // à adapter selon l'événement
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row relative">
@@ -25,26 +35,25 @@ export default function Home() {
       <div
         className="w-full md:w-1/2 relative flex flex-col justify-center items-center p-6 md:p-12"
         style={{
-          backgroundImage: "linear-gradient(to bottom right, rgba(135,206,235,0.85), rgba(255,255,255,0.85)), url('/recette-du-layer-cake-kinder-bueno-1.webp')",
+          backgroundImage: `linear-gradient(to bottom right, rgba(135,206,235,0.85), rgba(255,255,255,0.85)), url('${ANNIV_CONFIG.backgroundImage}')`,
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
       >
         <div className="max-w-md mx-auto text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Invitation à mon anniversaire</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{ANNIV_CONFIG.title}</h1>
           <p className="text-xl md:text-2xl text-gray-800 mb-8">
-            Faites une demande pour participer à cet événement spécial !
+            {ANNIV_CONFIG.intro}
           </p>
-          {/* L'image décorative n'est plus nécessaire ici car l'image est en fond */}
         </div>
       </div>
 
       {/* White section with form */}
       <div className="w-full md:w-1/2 bg-white p-6 md:p-12 flex items-center">
         <div className="max-w-md mx-auto w-full">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Demande de participation</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">{ANNIV_CONFIG.formTitle}</h2>
           <p className="text-gray-600 mb-8">
-            Remplissez le formulaire ci-dessous pour demander à participer à l'événement
+            {ANNIV_CONFIG.formSubtitle}
           </p>
           <RegistrationForm />
         </div>

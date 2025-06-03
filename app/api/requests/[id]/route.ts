@@ -1,6 +1,10 @@
-import {  NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { sendEmail } from "@/lib/sendEmail"
+import { render } from "@react-email/render"
+import { AcceptanceEmail } from "@/emails/AcceptanceEmail"
+import { RejectionEmail } from "@/emails/RejectionEmail"
+import * as React from "react"
 
 // GET /api/requests/[id] - Récupérer une demande spécifique
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
@@ -52,21 +56,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     // Envoi d'email seulement si le statut change vers APPROVED/REJECTED
     if (requestToUpdate.status !== status && (status === "APPROVED" || status === "REJECTED")) {
       try {
-        if (status === "APPROVED") {
-          await sendEmail({
-            to: requestToUpdate.email,
-            subject: "Votre demande de participation acceptée !",
-            template: 'acceptance',
-            templateProps: { name: requestToUpdate.name },
-          });
-        } else {
-          await sendEmail({
-            to: requestToUpdate.email,
-            subject: "Mise à jour concernant votre demande de participation",
-            template: 'rejection',
-            templateProps: { name: requestToUpdate.name },
-          });
-        }
+        await sendEmail({
+          to: requestToUpdate.email,
+          subject:
+            status === "APPROVED"
+              ? "Votre demande de participation acceptée !"
+              : "Mise à jour concernant votre demande de participation",
+          template: status === "APPROVED" ? "acceptance" : "rejection",
+          templateProps: { name: requestToUpdate.name },
+        });
       } catch (emailError) {
         console.error("Erreur d'envoi d'email:", emailError);
         // On retourne quand même la mise à jour mais avec un avertissement
@@ -92,14 +90,21 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const id = params.id
+    if (!id) {
+      return NextResponse.json({ error: "ID requis" }, { status: 400 })
+    }
 
-    await prisma.request.delete({
+    const deleted = await prisma.request.delete({
       where: { id },
     })
 
-    return NextResponse.json({ success: true })
-  } catch (error) {
+    return NextResponse.json({ success: true, deleted })
+  } catch (error: any) {
+    let message = "Erreur lors de la suppression de la demande"
+    if (error.code === "P2025") {
+      message = "La demande n'existe plus ou a déjà été supprimée."
+    }
     console.error("Erreur lors de la suppression de la demande:", error)
-    return NextResponse.json({ error: "Erreur lors de la suppression de la demande" }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

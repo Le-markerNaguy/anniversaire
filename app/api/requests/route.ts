@@ -49,4 +49,5 @@ export async function POST(req: NextRequest) {
     console.error("Erreur lors de la création de la demande:", error)
     return NextResponse.json({ error: "Erreur lors de la création de la demande" }, { status: 500 })
   }
-}
+}  
+

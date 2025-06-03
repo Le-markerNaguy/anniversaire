@@ -1,8 +1,7 @@
+import jwt from "jsonwebtoken"
 import { type NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-import { getIronSession } from "iron-session"
-import { sessionOptions, IronSessionData } from "@/lib/session"
 
 // POST /api/auth - Authentification admin
 export async function POST(req: NextRequest) {
@@ -31,37 +30,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Identifiants invalides" }, { status: 401 })
     }
 
-    // Authentication successful - Create session
-    const response = NextResponse.json({ success: true })
-    const session = await getIronSession<IronSessionData>(req, response, sessionOptions)
-    session.adminId = admin.id // Store admin ID
-    await session.save() // Save the session
+    // Générer un JWT
+    const token = jwt.sign({ id: admin.id, username: admin.username }, process.env.JWT_SECRET || "secret", {
+      expiresIn: "1d",
+    })
 
-    return response // Return the response with the session cookie
+    // Retourner le JWT dans la réponse JSON
+    return NextResponse.json({ success: true, token })
   } catch (error) {
     console.error("Erreur lors de l'authentification:", error)
     return NextResponse.json({ error: "Erreur lors de l'authentification" }, { status: 500 })
   }
 }
 
-// GET /api/auth - Verify Authentication (Check session)
+// GET /api/auth - Vérifie le JWT envoyé dans le header Authorization
 export async function GET(req: NextRequest) {
-  const response = new NextResponse()
-  const session = await getIronSession<IronSessionData>(req, response, sessionOptions)
-
-  if (session.adminId) {
-    // Session exists and contains adminId, user is authenticated
-    return NextResponse.json({ authenticated: true, user: { id: session.adminId } })
-  } else {
-    // No session or adminId not set, user is not authenticated
+  const authHeader = req.headers.get("authorization")
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return NextResponse.json({ authenticated: false }, { status: 401 })
+  }
+  const token = authHeader.replace("Bearer ", "")
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret")
+    return NextResponse.json({ authenticated: true, user: decoded })
+  } catch {
     return NextResponse.json({ authenticated: false }, { status: 401 })
   }
 }
 
-// DELETE /api/auth - Logout (Destroy session)
-export async function DELETE(req: NextRequest) {
-  const response = new NextResponse()
-  const session = await getIronSession<IronSessionData>(req, response, sessionOptions)
-  await session.destroy() // Destroy the session
+// DELETE /api/auth - Déconnexion (stateless, rien à faire)
+export async function DELETE() {
+  // Le client doit juste supprimer le JWT de son localStorage
   return NextResponse.json({ success: true })
 }

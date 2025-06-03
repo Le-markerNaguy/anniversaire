@@ -63,6 +63,31 @@ export function AdminRequestList({ requests: initialRequests }: AdminRequestList
     }
   }
 
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Supprimer définitivement cet invité ?")) return
+    try {
+      const response = await fetch(`/api/requests/${id}`, {
+        method: "DELETE",
+      })
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de la suppression")
+      }
+      setRequests(requests.filter((r) => r.id !== id))
+      toast({
+        title: "Invité supprimé",
+        description: "La demande a été supprimée avec succès.",
+      })
+    } catch (error) {
+      console.error("Erreur suppression:", error)
+      toast({
+        title: "Erreur",
+        description: "Impossible de supprimer la demande.",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (requests.length === 0) {
     return (
       <div className="text-center py-12">
@@ -123,6 +148,13 @@ export function AdminRequestList({ requests: initialRequests }: AdminRequestList
           </CardContent>
 
           <CardFooter className="bg-gray-50/50 flex justify-end gap-2">
+            <Button
+              variant="outline"
+              className="border-red-500 text-red-500 hover:bg-red-50"
+              onClick={() => handleDelete(request.id)}
+            >
+              Supprimer
+            </Button>
             {request.status === "PENDING" ? (
               <>
                 <Button

@@ -19,7 +19,7 @@ export function RegistrationForm() {
 
     const formData = new FormData(e.currentTarget)
     const formValues = {
-      name: formData.get("name") as number,
+      name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       date: date ? date.toISOString() : null,
@@ -28,7 +28,7 @@ export function RegistrationForm() {
 
     try {
       const response = await fetch("/api/requests", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
