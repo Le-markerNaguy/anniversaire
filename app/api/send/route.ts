@@ -1,3 +1,1 @@
-import { Resend } from 'resend'
-
-export const resend = new Resend(process.env.RESEND_API_KEY)
+// Suppression de tout ce qui concerne Resend, ce fichier est maintenant vide ou à remplacer par la logique nodemailer si besoin
