@@ -126,6 +126,7 @@ exports.Prisma.RequestScalarFieldEnum = {
   email: 'email',
   phone: 'phone',
   message: 'message',
+  accessCode: 'accessCode',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

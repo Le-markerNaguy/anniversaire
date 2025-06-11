@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma"
 import { sendEmail } from "@/lib/sendEmail"
 import { render } from "@react-email/render"
 import { AcceptanceEmail } from "@/emails/AcceptanceEmail"
-import { RejectionEmail } from "@/emails/RejectionEmail"
 import * as React from "react"
 
 // GET /api/requests/[id] - Récupérer une demande spécifique
@@ -33,8 +32,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const body = await req.json();
     const { status } = body;
 
-    // Validation
-    if (!status || !["APPROVED", "REJECTED", "PENDING"].includes(status)) {
+    // Validation: Seuls "APPROVED" et "PENDING" sont autorisés
+    if (!status || !["APPROVED", "PENDING"].includes(status)) {
       return NextResponse.json({ error: "Statut invalide" }, { status: 400 });
     }
 
@@ -53,16 +52,13 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       data: { status },
     });
 
-    // Envoi d'email seulement si le statut change vers APPROVED/REJECTED
-    if (requestToUpdate.status !== status && (status === "APPROVED" || status === "REJECTED")) {
+    // Envoi d'email seulement si le statut change vers APPROVED
+    if (requestToUpdate.status !== status && status === "APPROVED") {
       try {
         await sendEmail({
           to: requestToUpdate.email,
-          subject:
-            status === "APPROVED"
-              ? "Votre demande de participation acceptée !"
-              : "Mise à jour concernant votre demande de participation",
-          template: status === "APPROVED" ? "acceptance" : "rejection",
+          subject: "Votre demande de participation acceptée !",
+          template: "acceptance",
           templateProps: { name: requestToUpdate.name },
         });
       } catch (emailError) {

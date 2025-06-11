@@ -994,6 +994,7 @@ export namespace Prisma {
     email: string | null
     phone: string | null
     message: string | null
+    accessCode: string | null
     status: $Enums.RequestStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1005,6 +1006,7 @@ export namespace Prisma {
     email: string | null
     phone: string | null
     message: string | null
+    accessCode: string | null
     status: $Enums.RequestStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1016,6 +1018,7 @@ export namespace Prisma {
     email: number
     phone: number
     message: number
+    accessCode: number
     status: number
     createdAt: number
     updatedAt: number
@@ -1029,6 +1032,7 @@ export namespace Prisma {
     email?: true
     phone?: true
     message?: true
+    accessCode?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1040,6 +1044,7 @@ export namespace Prisma {
     email?: true
     phone?: true
     message?: true
+    accessCode?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1051,6 +1056,7 @@ export namespace Prisma {
     email?: true
     phone?: true
     message?: true
+    accessCode?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1134,7 +1140,8 @@ export namespace Prisma {
     name: string
     email: string
     phone: string | null
-    message: string
+    message: string | null
+    accessCode: string | null
     status: $Enums.RequestStatus
     createdAt: Date
     updatedAt: Date
@@ -1163,6 +1170,7 @@ export namespace Prisma {
     email?: boolean
     phone?: boolean
     message?: boolean
+    accessCode?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1174,6 +1182,7 @@ export namespace Prisma {
     email?: boolean
     phone?: boolean
     message?: boolean
+    accessCode?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1185,6 +1194,7 @@ export namespace Prisma {
     email?: boolean
     phone?: boolean
     message?: boolean
+    accessCode?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1196,12 +1206,13 @@ export namespace Prisma {
     email?: boolean
     phone?: boolean
     message?: boolean
+    accessCode?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "message" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["request"]>
+  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "message" | "accessCode" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["request"]>
 
   export type $RequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Request"
@@ -1211,7 +1222,8 @@ export namespace Prisma {
       name: string
       email: string
       phone: string | null
-      message: string
+      message: string | null
+      accessCode: string | null
       status: $Enums.RequestStatus
       createdAt: Date
       updatedAt: Date
@@ -1643,6 +1655,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Request", 'String'>
     readonly phone: FieldRef<"Request", 'String'>
     readonly message: FieldRef<"Request", 'String'>
+    readonly accessCode: FieldRef<"Request", 'String'>
     readonly status: FieldRef<"Request", 'RequestStatus'>
     readonly createdAt: FieldRef<"Request", 'DateTime'>
     readonly updatedAt: FieldRef<"Request", 'DateTime'>
@@ -3027,6 +3040,7 @@ export namespace Prisma {
     email: 'email',
     phone: 'phone',
     message: 'message',
+    accessCode: 'accessCode',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -3142,7 +3156,8 @@ export namespace Prisma {
     name?: StringFilter<"Request"> | string
     email?: StringFilter<"Request"> | string
     phone?: StringNullableFilter<"Request"> | string | null
-    message?: StringFilter<"Request"> | string
+    message?: StringNullableFilter<"Request"> | string | null
+    accessCode?: StringNullableFilter<"Request"> | string | null
     status?: EnumRequestStatusFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"Request"> | Date | string
     updatedAt?: DateTimeFilter<"Request"> | Date | string
@@ -3153,7 +3168,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    message?: SortOrder
+    message?: SortOrderInput | SortOrder
+    accessCode?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -3167,7 +3183,8 @@ export namespace Prisma {
     name?: StringFilter<"Request"> | string
     email?: StringFilter<"Request"> | string
     phone?: StringNullableFilter<"Request"> | string | null
-    message?: StringFilter<"Request"> | string
+    message?: StringNullableFilter<"Request"> | string | null
+    accessCode?: StringNullableFilter<"Request"> | string | null
     status?: EnumRequestStatusFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"Request"> | Date | string
     updatedAt?: DateTimeFilter<"Request"> | Date | string
@@ -3178,7 +3195,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    message?: SortOrder
+    message?: SortOrderInput | SortOrder
+    accessCode?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -3195,7 +3213,8 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Request"> | string
     email?: StringWithAggregatesFilter<"Request"> | string
     phone?: StringNullableWithAggregatesFilter<"Request"> | string | null
-    message?: StringWithAggregatesFilter<"Request"> | string
+    message?: StringNullableWithAggregatesFilter<"Request"> | string | null
+    accessCode?: StringNullableWithAggregatesFilter<"Request"> | string | null
     status?: EnumRequestStatusWithAggregatesFilter<"Request"> | $Enums.RequestStatus
     createdAt?: DateTimeWithAggregatesFilter<"Request"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Request"> | Date | string
@@ -3258,7 +3277,8 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    message: string
+    message?: string | null
+    accessCode?: string | null
     status?: $Enums.RequestStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3269,7 +3289,8 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    message: string
+    message?: string | null
+    accessCode?: string | null
     status?: $Enums.RequestStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3280,7 +3301,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    message?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3291,7 +3313,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    message?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3302,7 +3325,8 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
-    message: string
+    message?: string | null
+    accessCode?: string | null
     status?: $Enums.RequestStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -3313,7 +3337,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    message?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3324,7 +3349,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    message?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    accessCode?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3445,6 +3471,7 @@ export namespace Prisma {
     email?: SortOrder
     phone?: SortOrder
     message?: SortOrder
+    accessCode?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -3456,6 +3483,7 @@ export namespace Prisma {
     email?: SortOrder
     phone?: SortOrder
     message?: SortOrder
+    accessCode?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -3467,6 +3495,7 @@ export namespace Prisma {
     email?: SortOrder
     phone?: SortOrder
     message?: SortOrder
+    accessCode?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder

@@ -1,14 +1,13 @@
 import nodemailer from 'nodemailer';
 import { render } from '@react-email/render';
 import { AcceptanceEmail } from '@/emails/AcceptanceEmail';
-import { RejectionEmail } from '@/emails/RejectionEmail';
 import * as React from 'react';
 
 interface SendEmailProps {
   to: string;
   subject: string;
-  template: 'acceptance' | 'rejection';
-  templateProps: { name: string };
+  template: 'acceptance';
+  templateProps: { name: string, accessCode: string }
 }
 
 export async function sendEmail({ to, subject, template, templateProps }: SendEmailProps) {
@@ -18,9 +17,7 @@ export async function sendEmail({ to, subject, template, templateProps }: SendEm
       throw new Error('SMTP_FROM is not configured in environment variables');
     }
     // Rendu du template email
-    const emailHtml = template === 'acceptance'
-      ? await render(React.createElement(AcceptanceEmail, templateProps))
-      : await render(React.createElement(RejectionEmail, templateProps));
+    const emailHtml = await render(React.createElement(AcceptanceEmail, templateProps));
 
     if (!emailHtml) {
       throw new Error(`Failed to render ${template} email template`);

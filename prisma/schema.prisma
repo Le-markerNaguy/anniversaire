@@ -19,7 +19,8 @@ model Request {
   name      String
   email     String
   phone     String?
-  message   String
+  message   String?
+  accessCode String?
   status    RequestStatus @default(PENDING)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

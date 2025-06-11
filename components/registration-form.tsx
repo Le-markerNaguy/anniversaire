@@ -23,7 +23,7 @@ export function RegistrationForm() {
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       date: date ? date.toISOString() : null,
-      message: formData.get("message") as string,
+      message: formData.get("message") as string || "", // Message devient optionnel
     }
 
     try {
@@ -62,8 +62,7 @@ export function RegistrationForm() {
       <div className="p-6 bg-green-50 rounded-lg border border-green-200">
         <h3 className="text-xl font-semibold text-green-800 mb-2">Demande envoyée !</h3>
         <p className="text-green-700">
-          Votre demande de participation a été envoyée avec succès. L'organisateur examinera votre demande et vous
-          recevrez une notification lorsqu'elle sera acceptée ou refusée.
+          Votre demande de participation a été envoyée avec succès. Vous recevrez un message de confirmation avec un mot de passe d'accès.
         </p>
       </div>
     )
@@ -88,12 +87,11 @@ export function RegistrationForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message">Pourquoi souhaitez-vous participer ?</Label>
+          <Label htmlFor="message">Pourquoi souhaitez-vous participer ? (Optionnel)</Label>
           <Textarea
             id="message"
             name="message"
             placeholder="Partagez quelques mots sur vous et pourquoi vous souhaitez participer..."
-            required
           />
         </div>
 
